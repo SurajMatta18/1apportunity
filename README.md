@@ -1,5 +1,7 @@
 # 1apportunity Landing Page - HTML Version
 
+🌐 **Live Demo:** [https://surajmatta18.github.io/1apportunity/](https://surajmatta18.github.io/1apportunity/)
+
 A pure HTML/CSS/JavaScript version of the 1apportunity landing page. No frameworks, no build tools, no dependencies - just open and use!
 
 ## 📖 Description
@@ -199,18 +201,36 @@ Currently using inline SVG icons. To use Font Awesome or other icon libraries:
 1. Add the CDN link in `index.html`
 2. Replace SVG elements with icon tags
 
-## 🌐 Deployment Options
+## 🌐 Deployment
 
-This HTML version can be deployed anywhere:
+### Automatic Deployment (Current Setup)
 
-### GitHub Pages
+This repository is configured with **GitHub Actions** for automatic deployment to **GitHub Pages**:
+
+✅ **Live URL:** [https://surajmatta18.github.io/1apportunity/](https://surajmatta18.github.io/1apportunity/)
+
+**How it works:**
+- Every push to the `main` branch automatically triggers deployment
+- Changes go live within 1-2 minutes
+- Workflow can also be manually triggered from the Actions tab
+
+**GitHub Pages Setup:**
+1. The deployment workflow is in `.github/workflows/deploy.yml`
+2. GitHub Pages must be enabled in repository Settings → Pages
+3. Source should be set to "GitHub Actions"
+
+### Alternative Deployment Options
+
+This HTML version can also be deployed to other platforms:
+
+### GitHub Pages (Manual)
 1. Push to a GitHub repository
 2. Go to Settings → Pages
 3. Select source branch
-4. Your site will be live at `https://username.github.io/repo-name/html-version/`
+4. Your site will be live at `https://username.github.io/repo-name/`
 
 ### Netlify
-1. Drag and drop the `html-version` folder to [Netlify Drop](https://app.netlify.com/drop)
+1. Drag and drop the files to [Netlify Drop](https://app.netlify.com/drop)
 2. Or connect your Git repository
 3. No build configuration needed
 
@@ -220,7 +240,6 @@ This HTML version can be deployed anywhere:
 npm i -g vercel
 
 # Deploy
-cd html-version
 vercel
 ```
 
