@@ -9,25 +9,14 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar -->
     <header class="main-navbar">
         <div class="container nav-content">
             <a class="nav-brand" href="#hero" aria-label="1Apportunity Home">
-                <span class="nav-logo" aria-hidden="true">
-                    <svg viewBox="0 0 48 48" role="img" focusable="false">
-                        <defs>
-                            <linearGradient id="navLogoGradient" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#3b82f6"></stop>
-                                <stop offset="100%" stop-color="#10b981"></stop>
-                            </linearGradient>
-                        </defs>
-                        <circle cx="24" cy="24" r="22" fill="url(#navLogoGradient)"></circle>
-                        <path d="M24 12l10 24h-4.8l-2-5H20.8l-2 5H14l10-24zm0 6.5L21.9 26h4.2L24 18.5z" fill="white"></path>
-                    </svg>
-                </span>
+                <img class="nav-logo" src="1Apportunity logo.png" alt="1Apportunity Logo">
                 <span class="nav-wordmark">1APPORTUNITY.</span>
             </a>
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle navigation">
@@ -98,22 +87,6 @@
                         Learn More
                     </button>
                 </div>
-
-                <!-- Trust indicators -->
-                <div class="trust-indicators fade-in-up">
-                    <div class="trust-item">
-                        <div class="pulse-dot"></div>
-                        <span>12,547+ Active Users</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="pulse-dot"></div>
-                        <span>$127K+ Paid Out</span>
-                    </div>
-                    <div class="trust-item">
-                        <div class="pulse-dot"></div>
-                        <span>4.8★ Average Rating</span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -168,6 +141,25 @@
                             <span class="meta-value">+18%</span>
                         </div>
                     </div>
+                    
+                    <button class="chart-expand-btn" data-chart="registrations">
+                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        <span class="expand-text">View Chart</span>
+                    </button>
+                    
+                    <div class="stat-chart-section" data-chart-id="registrations">
+                        <div class="stat-chart-toggle">
+                            <button class="toggle-btn active" data-period="week" data-card="registrations">Week</button>
+                            <button class="toggle-btn" data-period="month" data-card="registrations">Month</button>
+                            <button class="toggle-btn" data-period="year" data-card="registrations">Year</button>
+                        </div>
+                        <div class="stat-chart-container">
+                            <canvas id="chart-registrations" aria-label="Registration trends"></canvas>
+                        </div>
+                    </div>
+                    
                     <div class="stat-decoration"></div>
                 </div>
 
@@ -187,6 +179,25 @@
                         <span class="mini-label">Avg completion</span>
                         <span class="mini-value">7 min</span>
                     </div>
+                    
+                    <button class="chart-expand-btn" data-chart="tasks">
+                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        <span class="expand-text">View Chart</span>
+                    </button>
+                    
+                    <div class="stat-chart-section" data-chart-id="tasks">
+                        <div class="stat-chart-toggle">
+                            <button class="toggle-btn active" data-period="week" data-card="tasks">Week</button>
+                            <button class="toggle-btn" data-period="month" data-card="tasks">Month</button>
+                            <button class="toggle-btn" data-period="year" data-card="tasks">Year</button>
+                        </div>
+                        <div class="stat-chart-container">
+                            <canvas id="chart-tasks" aria-label="Tasks trends"></canvas>
+                        </div>
+                    </div>
+                    
                     <div class="stat-decoration"></div>
                 </div>
 
@@ -200,12 +211,31 @@
                         </div>
                         <span class="stat-badge">Fast</span>
                     </div>
-                    <div class="stat-value" data-target="127845" data-prefix="$">$0</div>
+                    <div class="stat-value" data-target="127845" data-prefix="₹">₹0</div>
                     <div class="stat-label">Total Cash Outs</div>
                     <div class="stat-mini">
                         <span class="mini-label">Avg payout</span>
-                        <span class="mini-value">$12.40</span>
+                        <span class="mini-value">₹12.40</span>
                     </div>
+                    
+                    <button class="chart-expand-btn" data-chart="cashouts">
+                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        <span class="expand-text">View Chart</span>
+                    </button>
+                    
+                    <div class="stat-chart-section" data-chart-id="cashouts">
+                        <div class="stat-chart-toggle">
+                            <button class="toggle-btn active" data-period="week" data-card="cashouts">Week</button>
+                            <button class="toggle-btn" data-period="month" data-card="cashouts">Month</button>
+                            <button class="toggle-btn" data-period="year" data-card="cashouts">Year</button>
+                        </div>
+                        <div class="stat-chart-container">
+                            <canvas id="chart-cashouts" aria-label="Cashout trends"></canvas>
+                        </div>
+                    </div>
+                    
                     <div class="stat-decoration"></div>
                 </div>
             </div>
@@ -402,26 +432,31 @@
             </div>
             <div class="ways-grid">
                 <div class="ways-card">
-                    <h3 class="ways-title">Task Surveys</h3>
-                    <p class="ways-description">Share your opinions, contribute to business improvements, and earn rewards for your participation.</p>
-                </div>
-                <div class="ways-card">
-                    <h3 class="ways-title">Play Games</h3>
-                    <p class="ways-description">Earn rewards for reaching achievement milestones while enjoying your favourite games.</p>
-                </div>
-                <div class="ways-card">
                     <h3 class="ways-title">Social Media Tasks</h3>
                     <p class="ways-description">Boost your earnings by engaging with content on Twitter (X), Telegram, Instagram, and other social media platforms.</p>
                 </div>
                 <div class="ways-card">
+                    <span class="upcoming-badge">UPCOMING</span>
+                    <h3 class="ways-title">Task Surveys</h3>
+                    <p class="ways-description">Share your opinions, contribute to business improvements, and earn rewards for your participation.</p>
+                </div>
+                <div class="ways-card">
+                    <span class="upcoming-badge">UPCOMING</span>
+                    <h3 class="ways-title">Play Games</h3>
+                    <p class="ways-description">Earn rewards for reaching achievement milestones while enjoying your favourite games.</p>
+                </div>
+                <div class="ways-card">
+                    <span class="upcoming-badge">UPCOMING</span>
                     <h3 class="ways-title">Test Products</h3>
                     <p class="ways-description">Explore new apps and digital tools, share your feedback, and earn rewards for enhancing online services.</p>
                 </div>
                 <div class="ways-card">
+                    <span class="upcoming-badge">UPCOMING</span>
                     <h3 class="ways-title">Watch Videos</h3>
                     <p class="ways-description">Get rewarded for watching videos in your free time—an effortless way to earn money online.</p>
                 </div>
                 <div class="ways-card">
+                    <span class="upcoming-badge">UPCOMING</span>
                     <h3 class="ways-title">Rate & Earn</h3>
                     <p class="ways-description">Share your valuable feedback on products and services and get rewarded for your insights.</p>
                 </div>
@@ -809,6 +844,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

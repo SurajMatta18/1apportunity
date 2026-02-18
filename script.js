@@ -20,7 +20,7 @@ const mockReviews = [
         id: 1,
         name: "Sarah Johnson",
         rating: 5,
-        text: "1apportunity has completely changed how I earn extra income! The tasks are simple, and the payouts are always on time. I've earned over $500 in just two months!",
+        text: "1apportunity has completely changed how I earn extra income! The tasks are simple, and the payouts are always on time. I've earned over ₹500 in just two months!",
         date: "2024-01-15",
         initials: "SJ"
     },
@@ -183,6 +183,221 @@ function initializeStats() {
             year: 'numeric'
         });
     }
+}
+
+// ===================================
+// Stats Charts in Cards
+// ===================================
+
+function initializeStatsCharts() {
+    if (!window.Chart) return;
+
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+
+    // Chart instances storage
+    const chartInstances = {
+        registrations: null,
+        tasks: null,
+        cashouts: null
+    };
+
+    // Generate data for different timeframes
+    const generateData = (cardType, period) => {
+        const baseValues = {
+            registrations: { week: 300, month: 350, year: 280 },
+            tasks: { week: 1500, month: 1600, year: 1400 },
+            cashouts: { week: 8500, month: 9000, year: 8000 }
+        };
+
+        const increment = {
+            registrations: { week: 15, month: 12, year: 8 },
+            tasks: { week: 80, month: 60, year: 40 },
+            cashouts: { week: 200, month: 180, year: 120 }
+        };
+
+        let count, start, inc;
+        
+        if (period === 'week') {
+            count = 7;
+            start = baseValues[cardType].week;
+            inc = increment[cardType].week;
+        } else if (period === 'month') {
+            count = 30;
+            start = baseValues[cardType].month;
+            inc = increment[cardType].month;
+        } else { // year
+            count = 12; // 12 months
+            start = baseValues[cardType].year;
+            inc = increment[cardType].year;
+        }
+
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            const randomVariation = Math.floor(Math.random() * inc * 0.5);
+            data.push(start + (i * inc) + randomVariation);
+        }
+        return data;
+    };
+
+    // Get labels for different periods
+    const getLabels = (period) => {
+        if (period === 'week') {
+            return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        } else if (period === 'month') {
+            return Array.from({ length: 30 }, (_, i) => `${i + 1}`);
+        } else { // year
+            return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        }
+    };
+
+    // Chart colors
+    const chartColors = {
+        registrations: { border: '#2563eb', bg: '#2563eb1a' },
+        tasks: { border: '#a855f7', bg: '#a855f71a' },
+        cashouts: { border: '#10b981', bg: '#10b9811a' }
+    };
+
+    // Render chart
+    const renderChart = (cardType, period) => {
+        const canvasId = `chart-${cardType}`;
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+
+        const labels = getLabels(period);
+        const data = generateData(cardType, period);
+        const colors = chartColors[cardType];
+        const prefix = cardType === 'cashouts' ? '₹' : '';
+
+        // Destroy existing chart
+        if (chartInstances[cardType]) {
+            chartInstances[cardType].destroy();
+        }
+
+        // Create new chart
+        chartInstances[cardType] = new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    data,
+                    borderColor: colors.border,
+                    backgroundColor: colors.bg,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 2,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: colors.border,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        display: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: {
+                                size: 10
+                            },
+                            maxRotation: 0
+                        }
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.15)'
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: {
+                                size: 10
+                            },
+                            callback: (value) => `${prefix}${value.toLocaleString()}`
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 8,
+                        titleFont: {
+                            size: 11
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                        callbacks: {
+                            label: (context) => `${prefix}${context.parsed.y.toLocaleString()}`
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+    };
+
+    // Initialize toggle buttons
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const period = button.dataset.period;
+            const cardType = button.dataset.card;
+
+            // Update active state
+            const siblings = document.querySelectorAll(`[data-card="${cardType}"]`);
+            siblings.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Render chart with new period
+            renderChart(cardType, period);
+        });
+    });
+
+    // Initialize all charts with default period (week)
+    renderChart('registrations', 'week');
+    renderChart('tasks', 'week');
+    renderChart('cashouts', 'week');
+}
+
+// ===================================
+// Chart Expand/Collapse for Mobile
+// ===================================
+
+function initializeChartExpanders() {
+    const expandButtons = document.querySelectorAll('.chart-expand-btn');
+    
+    expandButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const chartId = this.getAttribute('data-chart');
+            const chartSection = document.querySelector(`.stat-chart-section[data-chart-id="${chartId}"]`);
+            
+            // Toggle expanded state
+            this.classList.toggle('expanded');
+            chartSection.classList.toggle('expanded');
+            
+            // Update button text
+            const expandText = this.querySelector('.expand-text');
+            if (this.classList.contains('expanded')) {
+                expandText.textContent = 'Chart';
+            } else {
+                expandText.textContent = 'View Chart';
+            }
+        });
+    });
 }
 
 // ===================================
@@ -438,6 +653,8 @@ function init() {
     
     // Initialize all components
     initializeStats();
+    initializeStatsCharts();
+    initializeChartExpanders();
     renderReviews();
     initializeScrollAnimations();
     initializeSmoothScroll();
