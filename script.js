@@ -132,46 +132,43 @@ function initializeStats() {
     const statsSection = document.getElementById('stats');
     if (!statsSection) return;
     
-    const isMobile = window.innerWidth <= 768;
+    // Track animation state per card to prevent overlapping animations
+    const animatingCards = new Map();
 
-    if (isMobile) {
-        // On mobile: observe each card individually so counters reveal on scroll
-        const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statValues = entry.target.querySelectorAll('.stat-value');
-                    statValues.forEach(valueElement => {
-                        const target = parseInt(valueElement.dataset.target);
-                        const prefix = valueElement.dataset.prefix || '';
-                        const suffix = '+';
-                        animateCounter(valueElement, target, prefix, suffix);
-                    });
-                    cardObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
+    // Observe each card individually so counters reveal on scroll independently
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const card = entry.target;
+            const isCurrentlyAnimating = animatingCards.get(card);
+            
+            if (entry.isIntersecting && !isCurrentlyAnimating) {
+                animatingCards.set(card, true);
+                
+                const statValues = card.querySelectorAll('.stat-value');
+                statValues.forEach(valueElement => {
+                    const target = parseInt(valueElement.dataset.target);
+                    const prefix = valueElement.dataset.prefix || '';
+                    const suffix = '+';
+                    animateCounter(valueElement, target, prefix, suffix);
+                });
+                
+                // Reset after animation completes (2 seconds)
+                setTimeout(() => { 
+                    animatingCards.set(card, false);
+                }, 2000);
+                // Don't unobserve - allow re-animation on scroll back
+            }
+        });
+    }, { 
+        threshold: 0.3, // Trigger when 30% of card is visible
+        rootMargin: '0px'
+    });
 
-        const cards = statsSection.querySelectorAll('.stat-card');
-        cards.forEach(card => cardObserver.observe(card));
-    } else {
-        // On desktop: observe the whole section at once
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statValues = entry.target.querySelectorAll('.stat-value');
-                    statValues.forEach(valueElement => {
-                        const target = parseInt(valueElement.dataset.target);
-                        const prefix = valueElement.dataset.prefix || '';
-                        const suffix = '+';
-                        animateCounter(valueElement, target, prefix, suffix);
-                    });
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        observer.observe(statsSection);
-    }
+    const cards = statsSection.querySelectorAll('.stat-card');
+    cards.forEach(card => {
+        animatingCards.set(card, false);
+        cardObserver.observe(card);
+    });
     
     // Update last updated date
     const lastUpdatedElement = document.getElementById('lastUpdated');
@@ -648,6 +645,35 @@ function logPerformance() {
 // Initialization
 // ===================================
 
+// ===================================
+// Navbar Get Started Button Visibility
+// ===================================
+
+function initializeNavbarGetStartedVisibility() {
+    const navbarButton = document.querySelector('.nav-actions .btn-get-started');
+    const heroButton = document.querySelector('.hero-buttons .btn-primary');
+    
+    if (!navbarButton || !heroButton) return;
+    
+    // Observe the hero button visibility
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Hero button is visible, hide navbar button
+                navbarButton.classList.remove('visible');
+            } else {
+                // Hero button is not visible, show navbar button
+                navbarButton.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1, // Trigger when even 10% of hero button is visible
+        rootMargin: '0px' // No margin
+    });
+    
+    observer.observe(heroButton);
+}
+
 function init() {
     console.log('1apportunity Landing Page - Initializing...');
     
@@ -661,6 +687,7 @@ function init() {
     initializeForms();
     initializeButtons();
     initializeNavMenu();
+    initializeNavbarGetStartedVisibility();
     
     // Optional: Performance monitoring (only in development)
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {

@@ -2,12 +2,6 @@
 
 A pure HTML/CSS/JavaScript version of the 1apportunity landing page. No frameworks, no build tools, no dependencies - just open and use!
 
-## 🌐 Live Demo
-
-**🚀 [View Live Website](https://surajmatta18.github.io/1apportunity/)**
-
-This website is automatically deployed to GitHub Pages. Any changes pushed to the `main` branch will be deployed automatically within 1-2 minutes.
-
 ## 📖 Description
 
 This is a standalone, framework-free version of the 1apportunity landing page. It features the same modern design and functionality as the Next.js version but can be deployed anywhere without any build process. Perfect for:
@@ -205,27 +199,9 @@ Currently using inline SVG icons. To use Font Awesome or other icon libraries:
 1. Add the CDN link in `index.html`
 2. Replace SVG elements with icon tags
 
-## 🌐 Deployment
+## 🌐 Deployment Options
 
-### Automatic Deployment (Current Setup)
-
-This repository is configured for **automatic deployment to GitHub Pages**:
-
-- ✅ Workflow: `.github/workflows/deploy.yml`
-- ✅ Trigger: Automatic on push to `main` branch
-- ✅ Manual: Can be triggered via Actions tab → "Run workflow"
-- ✅ Live URL: **https://surajmatta18.github.io/1apportunity/**
-
-**To deploy changes:**
-1. Push to `main` branch
-2. GitHub Actions automatically deploys in 1-2 minutes
-3. Monitor deployment in the Actions tab
-
-For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
-
-### Other Deployment Options
-
-This HTML version can also be deployed anywhere:
+This HTML version can be deployed anywhere:
 
 ### GitHub Pages
 1. Push to a GitHub repository
