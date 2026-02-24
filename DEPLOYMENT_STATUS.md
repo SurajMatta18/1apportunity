@@ -45,6 +45,9 @@ Your website includes:
 - ✅ `business.html` - How It Works page
 - ✅ `contact.html` - Contact page
 - ✅ `log_sign.html` - Login/Signup page
+- ✅ `reviews.html` - Reviews page
+- ✅ `ways-to-earn.html` - Ways to Earn page
+- ✅ `why-choose-us.html` - Why Choose Us page
 - ✅ `styles.css` - Styling
 - ✅ `log_sign.css` - Login/Signup styles
 - ✅ `script.js` - JavaScript functionality
